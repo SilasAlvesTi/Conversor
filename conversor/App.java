@@ -18,7 +18,12 @@ public class App {
 				Moedas moedas = new Moedas();
 				moedas.tiposDeConversao();
 				break;
-
+			
+			case "Conversor de temperaturas":
+				Temperaturas temperaturas = new Temperaturas();
+				temperaturas.tiposDeConversao();
+				break;
+				
 			default:
 				throw new IllegalArgumentException("Unexpected value: " + opcaoEscolhida);
 			}

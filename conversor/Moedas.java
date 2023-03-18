@@ -2,13 +2,15 @@ package conversor;
 
 import javax.swing.JOptionPane;
 
-public class Moedas {
+public class Moedas implements TiposDeConversao{
 
+	@Override
 	public String[] getOpcoes() {
 		String[] opcoes = { "De real para dolar", "De dolar para real" };
 		return opcoes;
 	}
 
+	@Override
 	public void tiposDeConversao() {
 		String comoConverter = (String) JOptionPane.showInputDialog(null, "Para qual moeda deseja converter?", "",
 				JOptionPane.QUESTION_MESSAGE, null, getOpcoes(), getOpcoes()[0]);
@@ -21,10 +23,10 @@ public class Moedas {
 
 		switch (comoConverter) {
 		case "De real para dolar":
-			realizaConversaoParaDolar(valor);
+			mostraOValorConvertidoParaDolar(valor);
 			break;
 		case "De dolar para real":
-			realizaConversaoParaReal(valor);
+			mostraOValorConvertidoParaReal(valor);
 			break;
 
 		default:
@@ -32,7 +34,8 @@ public class Moedas {
 		}
 	}
 
-	private boolean validaEntrada(String valor) {
+	@Override
+	public boolean validaEntrada(String valor) {
 		if (valor.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "O campo Valor não pode ser vazio.", "Erro de preenchimento", 0);
 			return false;
@@ -55,16 +58,16 @@ public class Moedas {
 
 		return true;
 	}
-
-	private String telaGetValor() {
+	
+	@Override
+	public String telaGetValor() {
 		return (String) JOptionPane.showInputDialog(null, "Qual o valor deseja converter?", "",
 				JOptionPane.QUESTION_MESSAGE, null, null, "");
 	}
 
-	private double getValor() {
-		String valorParaConverter = "";
-
-		valorParaConverter = telaGetValor();
+	@Override
+	public double getValor() {
+		String valorParaConverter = telaGetValor();
 
 		if (valorParaConverter == null) {
 			System.exit(0);
@@ -77,20 +80,20 @@ public class Moedas {
 		return Double.parseDouble(valorParaConverter);
 	}
 
-	private void realizaConversaoParaDolar(double valor) {
-		mostraOValorConvertidoParaDolar(valor / 5);
+	private double realizaConversaoParaDolar(double valor) {
+		return valor / 5;
 	}
 
-	private void realizaConversaoParaReal(double valor) {
-		mostraOValorConvertidoParaReal(valor * 5);
+	private double realizaConversaoParaReal(double valor) {
+		return valor * 5;
 	}
 
 	private void mostraOValorConvertidoParaDolar(double valor) {
-		JOptionPane.showMessageDialog(null, "O valor convertido é: $" + valor);
+		JOptionPane.showMessageDialog(null, "O valor convertido é: $" + realizaConversaoParaDolar(valor));
 	}
 
 	private void mostraOValorConvertidoParaReal(double valor) {
-		JOptionPane.showMessageDialog(null, "O valor convertido é: R$" + valor);
+		JOptionPane.showMessageDialog(null, "O valor convertido é: R$" + realizaConversaoParaReal(valor));
 	}
 
 }
